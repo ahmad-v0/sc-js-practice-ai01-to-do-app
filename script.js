@@ -2,9 +2,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const taskInput = document.getElementById('task-input');
   const prioritySelect = document.getElementById('priority-select');
   const addTaskBtn = document.getElementById('add-task-btn');
-  const todoTasks = document.getElementById('todo-tasks');
-  const inProgressTasks = document.getElementById('in-progress-tasks');
-  const doneTasks = document.getElementById('done-tasks');
+  const todoTasks = document.getElementById('todo-tasks-container');
+  const inProgressTasks = document.getElementById('in-progress-tasks-container');
+  const doneTasks = document.getElementById('done-tasks-container');
   const dateElement = document.getElementById('date');
   const taskSummaryElement = document.getElementById('task-summary');
 
@@ -15,8 +15,16 @@ document.addEventListener('DOMContentLoaded', () => {
   const today = new Date();
   dateElement.textContent = today.toDateString();
 
+  // Clear all columns before loading tasks
+  function clearColumns() {
+    todoTasks.innerHTML = '';
+    inProgressTasks.innerHTML = '';
+    doneTasks.innerHTML = '';
+  }
+
   // Load tasks from local storage on page load
   function loadTasks() {
+    clearColumns(); // Clear columns to prevent duplicates
     tasks.forEach(task => createTaskElement(task));
     updateTaskSummary();
   }
@@ -44,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
       ` : ''}
     `;
 
-    // Append to the correct column
+    // Append to the correct column based on the task's status
     if (task.status === 'todo') {
       todoTasks.appendChild(taskElement);
     } else if (task.status === 'in-progress') {
@@ -60,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const priority = prioritySelect.value;
 
     if (text) {
-      const task = { text, priority, status: 'todo', comment: '' };
+      const task = { text, priority, status: 'todo', comment: '' }; // Default status is 'todo'
       tasks.push(task);
       createTaskElement(task);
       updateLocalStorage();
@@ -79,7 +87,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const todoCount = todoTasks.children.length;
     const inProgressCount = inProgressTasks.children.length;
     const doneCount = doneTasks.children.length;
-
     let summaryMessage = '';
 
     // Handle cases where all columns are empty
@@ -88,15 +95,12 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
       // Build the summary message based on task counts
       const parts = [];
-
       if (todoCount > 0) {
         parts.push(`You have ${todoCount} task${todoCount > 1 ? 's' : ''} to start.`);
       }
-
       if (inProgressCount > 0) {
         parts.push(`You have ${inProgressCount} task${inProgressCount > 1 ? 's' : ''} in progress.`);
       }
-
       if (doneCount > 0) {
         parts.push(`You've completed ${doneCount} task${doneCount > 1 ? 's' : ''}. Great job!`);
       }
@@ -149,7 +153,6 @@ document.addEventListener('DOMContentLoaded', () => {
           const commentInput = newCommentSection.querySelector('.comment-input');
           const taskText = taskElement.querySelector('span').textContent;
           const taskIndex = tasks.findIndex(task => task.text === taskText);
-
           tasks[taskIndex].comment = commentInput.value.trim();
           newCommentSection.innerHTML = `
             <div class="comment-text">${tasks[taskIndex].comment}</div>
@@ -176,7 +179,6 @@ document.addEventListener('DOMContentLoaded', () => {
       const commentSection = taskElement.querySelector('.task-comments');
       const taskText = taskElement.querySelector('span').textContent;
       const taskIndex = tasks.findIndex(task => task.text === taskText);
-
       commentSection.innerHTML = `
         <textarea class="comment-input">${tasks[taskIndex].comment}</textarea>
         <div class="actions">
@@ -212,7 +214,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.target.closest('.delete-task')) {
       const taskElement = e.target.closest('.task');
       const taskText = taskElement.querySelector('span').textContent;
-
       taskElement.remove();
       tasks = tasks.filter(task => task.text !== taskText);
       updateLocalStorage();
@@ -233,13 +234,11 @@ document.addEventListener('DOMContentLoaded', () => {
   // Drag-and-drop functionality
   document.querySelectorAll('.column').forEach(column => {
     const tasksContainer = column.querySelector('.tasks');
-
     column.addEventListener('dragover', (e) => {
       e.preventDefault();
       column.classList.add('dragover'); // Highlight column
       const dragging = document.querySelector('.dragging');
       const afterElement = getDragAfterElement(tasksContainer, e.clientY);
-
       if (afterElement == null) {
         tasksContainer.appendChild(dragging); // Append to the end if no valid target
       } else {
@@ -259,11 +258,9 @@ document.addEventListener('DOMContentLoaded', () => {
   // Helper function to determine where to insert the dragged task
   function getDragAfterElement(container, y) {
     const draggableElements = [...container.querySelectorAll('.task:not(.dragging)')];
-
     return draggableElements.reduce((closest, child) => {
       const box = child.getBoundingClientRect();
       const offset = y - box.top - box.height / 2;
-
       if (offset < 0 && offset > closest.offset) {
         return { offset, element: child };
       } else {
@@ -283,18 +280,33 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.target.classList.contains('task')) {
       e.target.classList.remove('dragging');
 
+      // Debugging: Log the task element and its parent column
+      console.log('Task dropped:', e.target);
+      console.log('Parent column ID:', e.target.parentElement.parentElement.id);
+
       // Update task status based on the column it's dropped into
-      const taskText = e.target.querySelector('span').textContent;
+      const taskText = e.target.querySelector('span').textContent.trim(); // Trim whitespace
       const taskIndex = tasks.findIndex(task => task.text === taskText);
 
+      if (taskIndex === -1) {
+        console.error('Task not found in tasks array:', taskText);
+        return;
+      }
+
       const columnId = e.target.parentElement.parentElement.id;
+
       if (columnId === 'todo-tasks') {
         tasks[taskIndex].status = 'todo';
       } else if (columnId === 'in-progress-tasks') {
         tasks[taskIndex].status = 'in-progress';
       } else if (columnId === 'done-tasks') {
         tasks[taskIndex].status = 'done';
+      } else {
+        console.error('Invalid column ID:', columnId);
+        return;
       }
+
+      console.log('Updated task status:', tasks[taskIndex]);
 
       updateLocalStorage();
       updateTaskSummary();
