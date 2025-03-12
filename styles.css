@@ -78,8 +78,8 @@ body {
 }
 
 .add-task select option {
-  background: rgba(0, 0, 0, 0.2); /* Semi-transparent black background */
-  color: #fff; /* White text for options */
+  background: rgba(255, 255, 255, 0.1); /* Semi-transparent white background to match the rest */
+  color: #2d3436; /* Dark gray text for readability */
 }
 
 .add-task button {
