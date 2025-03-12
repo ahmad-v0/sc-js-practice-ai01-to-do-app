@@ -317,3 +317,65 @@ document.addEventListener('DOMContentLoaded', () => {
   // Load tasks when the page loads
   loadTasks();
 });
+
+// Function to show a notification popup
+function showNotification(message) {
+  const notification = document.createElement('div');
+  notification.className = 'notification';
+  notification.textContent = message;
+  document.body.appendChild(notification);
+
+  // Remove the notification after 3 seconds
+  setTimeout(() => {
+    notification.remove();
+  }, 3000);
+}
+
+// Function to trigger confetti effect
+function triggerConfetti() {
+  confetti({
+    particleCount: 100,
+    spread: 70,
+    origin: { y: 0.6 },
+  });
+}
+
+// Add event listeners for task movement and completion
+document.addEventListener('dragend', (e) => {
+  if (e.target.classList.contains('task')) {
+    const taskElement = e.target;
+    const columnId = taskElement.parentElement.parentElement.id;
+
+    // Show notification based on the column
+    if (columnId === 'done-tasks') {
+      showNotification('Task completed! Great job!');
+      triggerConfetti(); // Trigger confetti for completed tasks
+    } else if (columnId === 'in-progress-tasks') {
+      showNotification('Task moved to In Progress. Keep going!');
+    } else if (columnId === 'todo-tasks') {
+      showNotification('Task moved to To Do.');
+    }
+  }
+});
+
+// Add event listener for task deletion
+document.addEventListener('click', (e) => {
+  if (e.target.closest('.delete-task')) {
+    showNotification('Task deleted successfully!');
+  }
+});
+
+// Add event listener for task creation
+document.getElementById('add-task-btn').addEventListener('click', () => {
+  const taskInput = document.getElementById('task-input');
+  if (taskInput.value.trim()) {
+    showNotification('Task added successfully!');
+  }
+});
+
+// Add event listener for comment saving
+document.addEventListener('click', (e) => {
+  if (e.target.closest('.save-comment')) {
+    showNotification('Comment saved successfully!');
+  }
+});

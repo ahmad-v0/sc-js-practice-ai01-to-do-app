@@ -266,6 +266,29 @@ body {
   word-wrap: break-word;
 }
 
+/* Notification Popup */
+.notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: rgba(108, 92, 231, 0.9); /* Semi-transparent purple background */
+  color: #fff; /* White text */
+  padding: 10px 20px;
+  border-radius: 8px;
+  backdrop-filter: blur(10px); /* Blur effect */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  animation: slideIn 0.5s ease;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
 /* Media Queries for Responsiveness */
 @media (max-width: 768px) {
   .kanban-board {
