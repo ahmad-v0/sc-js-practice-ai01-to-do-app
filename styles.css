@@ -45,11 +45,11 @@ body {
 .add-task select,
 .add-task button {
   padding: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.2); /* Light border */
+  border-radius: 4px; /* Consistent border radius */
   font-size: clamp(0.8rem, 1.5vw, 1rem); /* Responsive font size */
-  background: rgba(255, 255, 255, 0.1);
-  color: #fff;
+  background: rgba(255, 255, 255, 0.1); /* Semi-transparent white background */
+  color: #fff; /* White text for consistency */
   flex: 1 1 auto; /* Allow elements to grow and shrink */
   min-width: 120px; /* Minimum width for small screens */
   max-width: 100%; /* Prevent overflow */
@@ -57,12 +57,34 @@ body {
 }
 
 .add-task input::placeholder {
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.6); /* Placeholder text color */
+}
+
+.add-task select {
+  appearance: none; /* Remove default arrow */
+  -webkit-appearance: none; /* Remove default arrow in Safari */
+  -moz-appearance: none; /* Remove default arrow in Firefox */
+  cursor: pointer; /* Show pointer cursor */
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e"); /* Custom white arrow */
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 12px;
+}
+
+.add-task select:hover,
+.add-task select:focus {
+  border-color: rgba(255, 255, 255, 0.4); /* Lighter border on hover/focus */
+  background-color: rgba(255, 255, 255, 0.2); /* Slightly brighter background */
+}
+
+.add-task select option {
+  background: rgba(0, 0, 0, 0.2); /* Semi-transparent black background */
+  color: #fff; /* White text for options */
 }
 
 .add-task button {
-  background: linear-gradient(135deg, #6c5ce7, #5a4acb);
-  color: #fff;
+  background: linear-gradient(135deg, #6c5ce7, #5a4acb); /* Gradient background */
+  color: #fff; /* White text */
   border: none;
   cursor: pointer;
   transition: background 0.3s ease;
@@ -73,7 +95,7 @@ body {
 }
 
 .add-task button:hover {
-  background: linear-gradient(135deg, #5a4acb, #6c5ce7);
+  background: linear-gradient(135deg, #5a4acb, #6c5ce7); /* Gradient hover effect */
 }
 
 /* Kanban Board */
@@ -86,11 +108,11 @@ body {
 }
 
 .column {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.1); /* Semi-transparent white background */
+  border-radius: 12px; /* Rounded corners */
   padding: 15px;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px); /* Blur effect */
+  border: 1px solid rgba(255, 255, 255, 0.2); /* Light border */
   flex: 1 1 calc(33% - 20px); /* Responsive column width */
   transition: transform 0.2s ease;
   max-height: 60vh;
@@ -106,7 +128,7 @@ body {
 .column h2 {
   margin-top: 0;
   font-size: clamp(1rem, 2vw, 1.5rem); /* Responsive font size */
-  color: #fff;
+  color: #fff; /* White text */
   display: flex;
   align-items: center;
   gap: 10px;
@@ -115,17 +137,17 @@ body {
 .tasks {
   min-height: 100px;
   padding: 10px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.1); /* Semi-transparent white background */
+  border-radius: 8px; /* Rounded corners */
   box-sizing: border-box; /* Include padding and borders in width */
 }
 
 .task {
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.9); /* Semi-transparent white background */
   padding: clamp(10px, 2vw, 15px); /* Responsive padding */
   margin-bottom: 10px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
   cursor: grab;
   transition: transform 0.2s ease;
   position: relative;
@@ -133,19 +155,19 @@ body {
 }
 
 .task:hover {
-  transform: translateY(-3px);
+  transform: translateY(-3px); /* Lift effect on hover */
 }
 
 .task.priority-low {
-  border-left: 4px solid #00b894;
+  border-left: 4px solid #00b894; /* Green for low priority */
 }
 
 .task.priority-medium {
-  border-left: 4px solid #fdcb6e;
+  border-left: 4px solid #fdcb6e; /* Yellow for medium priority */
 }
 
 .task.priority-high {
-  border-left: 4px solid #ff7675;
+  border-left: 4px solid #ff7675; /* Red for high priority */
 }
 
 .task-header {
@@ -158,7 +180,7 @@ body {
   background: none;
   border: none;
   cursor: pointer;
-  color: #ff7675;
+  color: #ff7675; /* Red for delete button */
   font-size: clamp(0.8rem, 1.5vw, 1rem); /* Responsive font size */
   margin-left: 10px;
 }
@@ -167,10 +189,10 @@ body {
 .task-comments {
   margin-top: 10px;
   font-size: clamp(0.8rem, 1.5vw, 0.9rem); /* Responsive font size */
-  color: #333;
-  background: #f9f9f9;
-  border: 1px solid #ddd;
-  border-radius: 8px;
+  color: #333; /* Dark text for comments */
+  background: #f9f9f9; /* Light background for comments */
+  border: 1px solid #ddd; /* Light border */
+  border-radius: 8px; /* Rounded corners */
   padding: clamp(8px, 1vw, 10px); /* Responsive padding */
   display: none;
   max-height: 150px;
@@ -188,8 +210,8 @@ body {
 .task-comments textarea {
   width: 100%;
   padding: clamp(6px, 1vw, 8px); /* Responsive padding */
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  border: 1px solid #ddd; /* Light border */
+  border-radius: 4px; /* Rounded corners */
   resize: none;
   font-size: clamp(0.8rem, 1.5vw, 0.9rem); /* Responsive font size */
   margin-bottom: 5px;
@@ -206,37 +228,37 @@ body {
 .task-comments .cancel-comment {
   padding: clamp(4px, 1vw, 5px) clamp(8px, 1vw, 10px); /* Responsive padding */
   border: none;
-  border-radius: 4px;
+  border-radius: 4px; /* Rounded corners */
   cursor: pointer;
   font-size: clamp(0.8rem, 1.5vw, 0.9rem); /* Responsive font size */
   transition: background 0.2s ease;
 }
 
 .task-comments .save-comment {
-  background-color: #6c5ce7;
-  color: #fff;
+  background-color: #6c5ce7; /* Purple for save button */
+  color: #fff; /* White text */
 }
 
 .task-comments .save-comment:hover {
-  background-color: #5a4acb;
+  background-color: #5a4acb; /* Darker purple on hover */
 }
 
 .task-comments .edit-comment {
-  background-color: #ff7675;
-  color: #fff;
+  background-color: #ff7675; /* Red for edit button */
+  color: #fff; /* White text */
 }
 
 .task-comments .edit-comment:hover {
-  background-color: #e74c3c;
+  background-color: #e74c3c; /* Darker red on hover */
 }
 
 .task-comments .cancel-comment {
-  background-color: #bdc3c7;
-  color: #fff;
+  background-color: #bdc3c7; /* Gray for cancel button */
+  color: #fff; /* White text */
 }
 
 .task-comments .cancel-comment:hover {
-  background-color: #95a5a6;
+  background-color: #95a5a6; /* Darker gray on hover */
 }
 
 .task-comments .comment-text {

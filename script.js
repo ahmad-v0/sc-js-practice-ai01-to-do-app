@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+  // DOM elements
   const taskInput = document.getElementById('task-input');
   const prioritySelect = document.getElementById('priority-select');
   const addTaskBtn = document.getElementById('add-task-btn');
@@ -32,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Create a task element and append it to the correct column
   function createTaskElement(task) {
     const taskElement = document.createElement('div');
-    taskElement.className = `task priority-${task.priority}`;
+    taskElement.className = `task priority-${task.priority}`; // Set priority class for styling
     taskElement.draggable = true;
     taskElement.dataset.text = task.text;
 
@@ -280,16 +281,16 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.target.classList.contains('task')) {
       e.target.classList.remove('dragging');
 
-      // Debugging: Log the task element and its parent column
-      console.log('Task dropped:', e.target);
-      console.log('Parent column ID:', e.target.parentElement.parentElement.id);
+      // Debugging: Log the task element and its parent column (commented out)
+      // console.log('Task dropped:', e.target);
+      // console.log('Parent column ID:', e.target.parentElement.parentElement.id);
 
       // Update task status based on the column it's dropped into
       const taskText = e.target.querySelector('span').textContent.trim(); // Trim whitespace
       const taskIndex = tasks.findIndex(task => task.text === taskText);
 
       if (taskIndex === -1) {
-        console.error('Task not found in tasks array:', taskText);
+        // console.error('Task not found in tasks array:', taskText); // Commented out
         return;
       }
 
@@ -302,11 +303,11 @@ document.addEventListener('DOMContentLoaded', () => {
       } else if (columnId === 'done-tasks') {
         tasks[taskIndex].status = 'done';
       } else {
-        console.error('Invalid column ID:', columnId);
+        // console.error('Invalid column ID:', columnId); // Commented out
         return;
       }
 
-      console.log('Updated task status:', tasks[taskIndex]);
+      // console.log('Updated task status:', tasks[taskIndex]); // Commented out
 
       updateLocalStorage();
       updateTaskSummary();
