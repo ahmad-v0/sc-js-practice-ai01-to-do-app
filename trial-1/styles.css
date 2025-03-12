@@ -1,0 +1,119 @@
+/* General Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+h1 {
+    margin-bottom: 20px;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+/* Task Input Section */
+.add-task {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+input, select, button {
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: none;
+}
+
+input {
+    width: 250px;
+    border: 2px solid white;
+    outline: none;
+    background: #ffffff;
+    color: #333;
+}
+
+select {
+    background: #ffffff;
+    color: #333;
+    cursor: pointer;
+}
+
+button {
+    background: #ff6b6b;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #ff3b3b;
+}
+
+/* Board Layout */
+.board {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+.column {
+    padding: 15px;
+    border-radius: 10px;
+    width: 30%;
+    min-height: 300px;
+    transition: 0.3s;
+}
+
+.task-list {
+    min-height: 200px;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+/* Task Cards */
+.task {
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 8px;
+    cursor: grab;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Delete Button */
+.task .delete {
+    background: #ff3b3b;
+    border: none;
+    color: white;
+    padding: 5px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.task .delete:hover {
+    background: #b22222;
+}
+
+/* Priority Colors */
+.low { background: #28a745; color: white; }
+.medium { background: #ffc107; color: black; }
+.high { background: #dc3545; color: white; }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .board { flex-direction: column; }
+    .column { width: 100%; }
+}
