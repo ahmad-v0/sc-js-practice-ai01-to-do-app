@@ -379,3 +379,62 @@ document.addEventListener('click', (e) => {
     showNotification('Comment saved successfully!');
   }
 });
+
+// Add touch event listeners for mobile drag-and-drop
+document.addEventListener('touchstart', (e) => {
+  if (e.target.classList.contains('task')) {
+    const task = e.target;
+    task.classList.add('dragging');
+
+    // Store the initial touch position
+    const touch = e.touches[0];
+    let initialX = touch.clientX;
+    let initialY = touch.clientY;
+
+    // Handle touch movement
+    const handleTouchMove = (e) => {
+      const touch = e.touches[0];
+      const deltaX = touch.clientX - initialX;
+      const deltaY = touch.clientY - initialY;
+
+      // Move the task element
+      task.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
+    };
+
+    // Handle touch end
+    const handleTouchEnd = () => {
+      task.classList.remove('dragging');
+      task.style.transform = 'none';
+
+      // Remove event listeners
+      document.removeEventListener('touchmove', handleTouchMove);
+      document.removeEventListener('touchend', handleTouchEnd);
+
+      // Determine the drop target (similar to the desktop logic)
+      const column = document.elementFromPoint(initialX, initialY).closest('.column');
+      if (column) {
+        column.querySelector('.tasks').appendChild(task);
+
+        // Update task status based on the column
+        const columnId = column.id;
+        const taskText = task.querySelector('span').textContent.trim();
+        const taskIndex = tasks.findIndex(task => task.text === taskText);
+
+        if (columnId === 'todo-tasks') {
+          tasks[taskIndex].status = 'todo';
+        } else if (columnId === 'in-progress-tasks') {
+          tasks[taskIndex].status = 'in-progress';
+        } else if (columnId === 'done-tasks') {
+          tasks[taskIndex].status = 'done';
+        }
+
+        updateLocalStorage();
+        updateTaskSummary();
+      }
+    };
+
+    // Add event listeners for touch move and end
+    document.addEventListener('touchmove', handleTouchMove);
+    document.addEventListener('touchend', handleTouchEnd);
+  }
+});

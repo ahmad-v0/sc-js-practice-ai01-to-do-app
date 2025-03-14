@@ -44,20 +44,20 @@ body {
 .add-task input,
 .add-task select,
 .add-task button {
-  padding: 10px;
+  padding: clamp(8px, 1vw, 12px); /* Responsive padding */
   border: 1px solid rgba(255, 255, 255, 0.2); /* Light border */
   border-radius: 4px; /* Consistent border radius */
   font-size: clamp(0.8rem, 1.5vw, 1rem); /* Responsive font size */
   background: rgba(255, 255, 255, 0.1); /* Semi-transparent white background */
   color: #fff; /* White text for consistency */
   flex: 1 1 auto; /* Allow elements to grow and shrink */
-  min-width: 120px; /* Minimum width for small screens */
+  min-width: unset; /* Remove fixed minimum width */
   max-width: 100%; /* Prevent overflow */
   box-sizing: border-box; /* Include padding and borders in width */
 }
 
 .add-task input::placeholder {
-  color: rgba(255, 255, 255, 0.6); /* Placeholder text color */
+  color: rgba(255, 255, 255, 0.8); /* Placeholder text color */
 }
 
 .add-task select {
@@ -89,8 +89,10 @@ body {
   cursor: pointer;
   transition: background 0.3s ease;
   flex: 1 1 auto; /* Allow buttons to grow and shrink */
-  min-width: 100px; /* Minimum width for small screens */
+  min-width: unset; /* Remove fixed minimum width */
   max-width: 100%; /* Prevent overflow */
+  padding: clamp(8px, 1vw, 12px); /* Responsive padding */
+  font-size: clamp(0.8rem, 1.5vw, 1rem); /* Responsive font size */
   box-sizing: border-box; /* Include padding and borders in width */
 }
 
